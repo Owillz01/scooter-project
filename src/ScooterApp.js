@@ -39,9 +39,7 @@ class ScooterApp {
   }
 
   logoutUser(username){
-    let user = this.getUser(username);
-    console.log(user.loggedIn, "user.loggedIn");
-    
+    let user = this.getUser(username);    
     if (user.loggedIn){
       user.logout();
       console.log("user is logged out");

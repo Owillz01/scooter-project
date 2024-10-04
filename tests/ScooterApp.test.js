@@ -32,10 +32,10 @@ describe("loginUser method tests", () => {
 // log out
 
 describe('logOutUser method test', ()=> {
-  let user = scooterApp.registerUser(username, password, 21);
-  scooterApp.loginUser(username, password);
+  let user = scooterApp.registerUser('ben', password, 21);
+  scooterApp.loginUser('ben', password);
   test('can successfully logout user', () => {
-    scooterApp.logoutUser(username)
+    scooterApp.logoutUser('ben')
     expect(user.loggedIn).toBe(false)
   })
   test("logout should throw an error", () => {
@@ -47,7 +47,7 @@ describe('logOutUser method test', ()=> {
 
 // rent scooter
 describe('rent scoter method test', ()=> {
-  let user = scooterApp.registerUser(username, password, 21);
+  let user = scooterApp.registerUser('Adam', password, 21);
   test('can successfully create a scooter', () => {
     let response = scooterApp.createScooter("glasgow");
     expect(response).toBeInstanceOf(Scooter);
@@ -64,12 +64,12 @@ describe('rent scoter method test', ()=> {
 
 // dock scooter
 describe("dock scoter method test", () => {
-  let user = scooterApp.registerUser(username, password, 21);
+  let user = scooterApp.registerUser('Tayo', password, 21);
   let scooter = scooterApp.createScooter("aberdeen");
 
   test("user can successfully dock scooter", () => {
-    scooterApp.dock("aberdeen");
+    scooterApp.dockScooter(scooter, "glasgow");
     expect(scooter.user).toBe(null);
-    expect(scooter.station).toBe("aberdeen");
+    expect(scooter.station).toBe("glasgow");
   });
 });
