@@ -13,6 +13,12 @@ describe("registerUser method tests", () => {
     const response = scooterApp.registerUser("Joe Bloggs", password, 21);
     expect(response).toBeInstanceOf(User);
   });
+
+  test("User cannot register if under age or already registered", () => {
+    expect(() => {
+      scooterApp.registerUser("Joe Bloggs", password, 14);
+    }).toThrow();
+  });
 });
 
 // log in
@@ -53,6 +59,13 @@ describe('rent scoter method test', ()=> {
     expect(response).toBeInstanceOf(Scooter);
   })
 
+  test("Scooter cannot be created if station does not exist", () => {
+    
+    expect(() => {
+      scooterApp.createScooter("portland");
+    }).toThrow();
+  });
+
   test("user can successfully rent a scooter", () => {
     let scooter = scooterApp.createScooter("glasgow");
     scooterApp.rentScooter(scooter, user);
@@ -60,7 +73,6 @@ describe('rent scoter method test', ()=> {
     expect(scooter.station).toBe(null);
   });
 })
-
 
 // dock scooter
 describe("dock scoter method test", () => {

@@ -28,6 +28,7 @@ class Scooter {
     this.station = station
     this.user = null
   }
+  
   recharge(){
 
   }

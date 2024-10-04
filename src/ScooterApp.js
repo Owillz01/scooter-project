@@ -50,10 +50,14 @@ class ScooterApp {
   }
 
   createScooter(station){
-    let scooter = new Scooter(station);
-    this.stations[station].push(scooter)
-    console.log("created new scooter");
-    return scooter;
+    if(this.stations[station]){
+      let scooter = new Scooter(station);
+      this.stations[station].push(scooter)
+      console.log("created new scooter");
+      return scooter;
+    }else{
+      this.throwError('station does not exist')
+    }
   }
 
   dockScooter(scooter, station){
