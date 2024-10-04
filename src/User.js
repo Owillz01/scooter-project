@@ -6,7 +6,7 @@ class User {
   constructor(username, password, age) {
     this.username = username;
     this.#password = password;
-    this.age = age;
+    this.#age = age;
     this.loggedIn = false;
   }
 
@@ -22,12 +22,20 @@ class User {
   }
 
   logout() {
-      this.loggedIn = false;
+    this.loggedIn = false;
   }
 
-  getPaaword(){
-    return this.#password
+  getPassword() {
+    return this.#password;
+  }
+
+  getAge() {
+    return this.#age;
   }
 }
+
+let user = new User("owillz", "1234567", 18);
+console.log(user.username);
+
 
 module.exports = User

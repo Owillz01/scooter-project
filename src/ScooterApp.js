@@ -16,6 +16,8 @@ class ScooterApp {
   registerUser(username, password, age){
     if(age >= 18 && !this.registeredUsers[username]){
       let user = new User(username, password, age)
+      console.log(user, 'user');
+      
       this.registeredUsers[username] = user;
       console.log("user has been registered");
       return user;
@@ -28,15 +30,18 @@ class ScooterApp {
 
   loginUser(username, password){
     let user = this.getUser(username)
-    if (!user || user.getPaaword() != password) {
+    if (!user || user.getPassword() != password) {
       this.throwError("Username or password is incorrect");
     }
+    user.login(password);
     console.log("user has been logged in");
     
   }
 
   logoutUser(username){
     let user = this.getUser(username);
+    console.log(user.loggedIn, "user.loggedIn");
+    
     if (user.loggedIn){
       user.logout();
       console.log("user is logged out");
@@ -54,35 +59,30 @@ class ScooterApp {
   }
 
   dockScooter(scooter, station){
-    this.stations[station].push(scooter)
-    scooter.dock(station);
-    console.log("scooter is docked");
+
     if(!this.stations[station]){
       this.throwError("no such station");
     }
-    if(scooter.station == station){
+    else if(scooter.station == station){
       this.throwError("scooter already at station");
+    }else{
+          this.stations[station].push(scooter);
+          scooter.dock(station);
+          console.log("scooter is docked");
     }
   }
 
   rentScooter(scooter, user){
-    scooter.rent(user);
-    // this.stations[scooter.station].find((item) => item == scooter);
-    let index = this.stations[scooter.station].indexOf(scooter);
-    this.stations[scooter.station].splice(index, 1);
-    console.log("scooter is rented");
     if(scooter.user){
       this.throwError("scooter already rented");
+    }else{
+          let index = this.stations[scooter.station].indexOf(scooter);
+          console.log(index, "index");
+
+          this.stations[scooter.station].splice(index, 1);
+          scooter.rent(user);
+          console.log("scooter is rented");
     }
-    // for(let station in this.stations){
-    //   if(this.stations[station].includes(scooter)){
-    //     let scooter = this.stations[station].find(item => item == scooter)
-    //     scooter.rent(user);
-    //     let index = this.stations[station].indexOf(scooter);
-    //     this.stations[station].splice(index, 1)
-    //     console.log("scooter is rented");
-    //   }
-    // }
   }
 
   print(){
@@ -101,4 +101,16 @@ class ScooterApp {
   }
 }
 
+let username = 'owillz'
+let password = '1234567'
+let app = new ScooterApp()
+let user = app.registerUser(username, password, 18);
+app.loginUser(username, password)
+app.logoutUser(username)
+
+let scooter = app.createScooter("glasgow");
+app.rentScooter(scooter, user);
+app.dockScooter(scooter, "glasgow");
+
+app.print()
 module.exports = ScooterApp
